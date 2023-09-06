@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BoomEscape</title>
+    <link rel="shortcut icon" href="./assets/icon.webp" type="image/x-icon" />
+
+    <script src="./Cell.js" defer></script>
+    <script src="./script.js" defer></script>
+
+    <link rel="stylesheet" href="./game.css" />
+  </head>
+  <body>
+    <p class="level">Level <span></span></p>
+    <p class="lives"></p>
+
+    <div class="container"></div>
+
+    <div class="next-menu-container">
+      <h3>You Win!</h3>
+
+      <div class="btn-container">
+        <button class="next">Next</button>
+        <a href="/" class="back">Home</a>
+      </div>
+    </div>
+
+    <div class="restart-menu-container">
+      <h3>Game Over!</h3>
+
+      <div class="btn-container">
+        <button class="restart">Restart</button>
+        <a href="/" class="back">Home</a>
+      </div>
+    </div>
+
+    <audio id="bomb">
+      <source src="../assets/bomb.mp3" type="audio/mpeg" />
+      Your browser does not support the audio element.
+    </audio>
+
+    <audio id="zero">
+      <source src="../assets/zero.mp3" type="audio/mpeg" />
+      Your browser does not support the audio element.
+    </audio>
+
+    <audio id="tap">
+      <source src="../assets/tap.mp3" type="audio/mpeg" />
+      Your browser does not support the audio element.
+    </audio>
+
+    <audio id="victory">
+      <source src="../assets/victory.mp3" type="audio/mpeg" />
+      Your browser does not support the audio element.
+    </audio>
+
+    <button onclick="stopAudio()" class="sound-btn">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="34"
+        height="34"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="lucide lucide-volume-2"
+      >
+        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+        <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+        <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+      </svg>
+    </button>
+  </body>
+</html>
