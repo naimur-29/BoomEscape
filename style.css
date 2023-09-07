@@ -32,6 +32,7 @@ body::before {
   background-size: cover;
   background-position: center;
   opacity: 0.3;
+  filter: blur(2px);
   z-index: -10;
 }
 
