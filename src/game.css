@@ -16,7 +16,6 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  overflow: hidden;
 }
 
 body {
@@ -67,7 +66,12 @@ body {
   grid-template-columns: repeat(10, auto);
   grid-template-rows: repeat(10, auto);
   box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.2);
-  animation: Appear 150ms ease backwards;
+}
+
+@media (hover: hover) {
+  .container {
+    animation: Appear 150ms ease backwards;
+  }
 }
 
 .container > .cell {
@@ -91,6 +95,12 @@ body {
 
 .container > .cell:active {
   scale: 1.1;
+}
+
+@media (hover: none) {
+  .container > .cell:active {
+    scale: 1.25;
+  }
 }
 
 @media (min-width: 300px) {
@@ -119,6 +129,7 @@ body {
   justify-content: center;
   gap: 40px;
   display: none;
+  overflow: hidden;
   animation: Appear 100ms ease-in backwards;
 }
 
@@ -177,6 +188,7 @@ body {
   justify-content: center;
   gap: 20px;
   display: none;
+  overflow: hidden;
   animation: Appear 100ms ease-in backwards;
 }
 

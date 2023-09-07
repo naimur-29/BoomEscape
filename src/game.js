@@ -90,7 +90,7 @@ let LIVES = 5;
 let cellStorage;
 let cellsPerRow = 5;
 let maxScore = cellsPerRow * cellsPerRow;
-const cellStates = [null, null, null, null, bomb];
+const cellStates = [null, null, bomb, null];
 
 container.style.width = `${containerSize}px`;
 container.style.height = `${containerSize}px`;
@@ -226,16 +226,35 @@ function countNeighborBombs(i, j) {
   );
 }
 
-function updateNeighbors(i, j) {
-  if (i > 0) cellStorage[i - 1][j].update();
-  if (j > 0) cellStorage[i][j - 1].update();
-  if (i > 0 && j > 0) cellStorage[i - 1][j - 1].update();
-  if (i < cellsPerRow - 1) cellStorage[i + 1][j].update();
-  if (j < cellsPerRow - 1) cellStorage[i][j + 1].update();
-  if (i < cellsPerRow - 1 && j < cellsPerRow - 1)
-    cellStorage[i + 1][j + 1].update();
-  if (j > 0 && i < cellsPerRow - 1) cellStorage[i + 1][j - 1].update();
-  if (i > 0 && j < cellsPerRow - 1) cellStorage[i - 1][j + 1].update();
+function updateNeighbors(prevI, prevJ) {
+  for (let iOff = -1; iOff <= 1; iOff++) {
+    for (let jOff = -1; jOff <= 1; jOff++) {
+      let i = prevI + iOff;
+      let j = prevJ + jOff;
+      console.log(i, j);
+
+      if (
+        i > -1 &&
+        i < cellsPerRow &&
+        j > -1 &&
+        j < cellsPerRow &&
+        !cellStorage[i][j].isVisited
+      ) {
+        console.log("worked!");
+        cellStorage[i][j].update();
+        if (cellStorage[i][j].state === "0") updateNeighbors(i, j);
+      }
+    }
+  }
+  // if (i > 0) cellStorage[i - 1][j].update();
+  // if (j > 0) cellStorage[i][j - 1].update();
+  // if (i > 0 && j > 0) cellStorage[i - 1][j - 1].update();
+  // if (i < cellsPerRow - 1) cellStorage[i + 1][j].update();
+  // if (j < cellsPerRow - 1) cellStorage[i][j + 1].update();
+  // if (i < cellsPerRow - 1 && j < cellsPerRow - 1)
+  //   cellStorage[i + 1][j + 1].update();
+  // if (j > 0 && i < cellsPerRow - 1) cellStorage[i + 1][j - 1].update();
+  // if (i > 0 && j < cellsPerRow - 1) cellStorage[i - 1][j + 1].update();
 }
 
 // handle window resize:
