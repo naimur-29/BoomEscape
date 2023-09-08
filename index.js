@@ -48,10 +48,17 @@ function stopAudio() {
 
 // dialog:
 const tutorialDialog = document.querySelector(".game-info-dialog");
+const tutorialDialogButton = document.querySelector(
+  ".game-info-dialog > .container > .confirm-btn"
+);
 const playButton = document.querySelector(".play");
 
 playButton.onclick = function (event) {
   event.preventDefault();
 
   tutorialDialog.style.display = "flex";
+};
+
+tutorialDialogButton.onclick = function () {
+  tutorialDialog.style.display = "none";
 };
