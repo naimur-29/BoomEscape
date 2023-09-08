@@ -1,3 +1,4 @@
+// audio:
 const audio = document.getElementById("myAudio");
 const btn = document.querySelector(".sound-btn");
 
@@ -44,3 +45,13 @@ function stopAudio() {
   audio.pause();
   btn.onclick = startAudio;
 }
+
+// dialog:
+const tutorialDialog = document.querySelector(".game-info-dialog");
+const playButton = document.querySelector(".play");
+
+playButton.onclick = function (event) {
+  event.preventDefault();
+
+  tutorialDialog.style.display = "flex";
+};

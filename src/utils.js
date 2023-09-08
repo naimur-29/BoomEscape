@@ -56,7 +56,7 @@ function bootGame(size, _lives) {
   cellsPerRow = size;
   LEVEL = size - 4;
   LIVES = _lives;
-  maxScore = 0;
+  maxScore = cellsPerRow * cellsPerRow;
   SCORE = 0;
   timeStep = 0;
 
@@ -84,7 +84,8 @@ function game(i, j) {
   // calculate the cell state for the rest:
   if (cellStorage[i][j].state === null) {
     cellStorage[i][j].state = String(countNeighborBombs(i, j));
-    maxScore++;
+  } else {
+    maxScore--;
   }
 
   // add click event listeners:
@@ -124,20 +125,31 @@ function game(i, j) {
 function updateGameStats() {
   // handle game over:
   if (LIVES === 0 || cellsPerRow >= 15) {
+    for (let i = 0; i < cellsPerRow; i++) {
+      for (let j = 0; j < cellsPerRow; j++) {
+        cellStorage[i][j].update();
+      }
+    }
+
     const timeoutRef = setTimeout(() => {
       restartDisplay.style.display = "flex";
       clearTimeout(timeoutRef);
-    }, 500);
-  }
-
-  if (SCORE >= maxScore) {
-    if (isAudioOn) {
-      victoryAudio.play();
+    }, 1000);
+  } else if (SCORE >= maxScore) {
+    for (let i = 0; i < cellsPerRow; i++) {
+      for (let j = 0; j < cellsPerRow; j++) {
+        cellStorage[i][j].update();
+      }
     }
+
     const timeoutRef = setTimeout(() => {
+      if (isAudioOn) {
+        victoryAudio.play();
+      }
+
       nextDisplay.style.display = "flex";
       clearTimeout(timeoutRef);
-    }, 500);
+    }, 1000);
   }
 
   level.textContent = LEVEL >= 10 ? LEVEL : `0${LEVEL}`;
@@ -167,7 +179,7 @@ function countNeighborBombs(i, j) {
 }
 
 function updateNeighbors(prevI, prevJ) {
-  timeStep = 0;
+  delay = 0;
 
   for (let iOff = -1; iOff <= 1; iOff++) {
     for (let jOff = -1; jOff <= 1; jOff++) {
@@ -181,13 +193,13 @@ function updateNeighbors(prevI, prevJ) {
         j < cellsPerRow &&
         !cellStorage[i][j].isVisited
       ) {
-        timeStep += 100;
+        delay += 100;
         const timeoutRef = setTimeout(() => {
           cellStorage[i][j].update();
           if (cellStorage[i][j].state === "0") updateNeighbors(i, j);
 
           clearTimeout(timeoutRef);
-        }, timeStep);
+        }, delay);
       }
     }
   }

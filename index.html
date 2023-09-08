@@ -6,14 +6,25 @@
     <title>BoomEscape</title>
     <link rel="shortcut icon" href="./assets/icon.webp" type="image/x-icon" />
 
-    <script src="./src/audio.js" defer></script>
+    <script src="./index.js" defer></script>
 
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <div class="home-page">
       <h1>BoomEscape</h1>
-      <a href="/src/game.html" class="play">Play</a>
+      <button class="play">Play</button>
+    </div>
+
+    <div class="game-info-dialog">
+      <div class="container">
+        <p class="description">
+          <strong>Guide: </strong>
+          Simply avoid the bomb cells! While each cell you reveal tells you how
+          many bombs are there in the 8 or less neighboring cells around it...
+        </p>
+        <a href="./src/game.html" class="confirm-btn">OK</a>
+      </div>
     </div>
 
     <audio id="myAudio" loop>

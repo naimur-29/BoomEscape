@@ -73,11 +73,11 @@ class Cell {
       [
         {
           opacity: 0,
-          transform: "scale(3) rotateY(180deg)",
+          transform: "scale(2) rotateY(180deg)",
         },
         {
           opacity: 0.5,
-          transform: "scale(2) rotateY(0deg)",
+          transform: "scale(1.25) rotateY(0deg)",
         },
         {
           opacity: 1,
