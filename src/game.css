@@ -63,6 +63,8 @@ body {
 
 .container {
   background-color: #fff3;
+  overflow: visible;
+  user-select: none;
   display: grid;
   grid-template-columns: repeat(10, auto);
   grid-template-rows: repeat(10, auto);

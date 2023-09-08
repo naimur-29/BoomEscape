@@ -43,8 +43,8 @@ function stopAudio() {
 }
 
 function bootGame(size, _lives) {
-  document.body.style.backgroundColor =
-    colors[Math.floor(Math.random() * colors.length)];
+  const color = colors[Math.floor(Math.random() * colors.length)];
+  document.body.style.backgroundColor = color;
 
   container.style.gridTemplateColumns = `repeat(${size}, auto)`;
   container.style.gridTemplateRows = `repeat(${size}, auto)`;
@@ -58,6 +58,7 @@ function bootGame(size, _lives) {
   LIVES = _lives;
   maxScore = 0;
   SCORE = 0;
+  timeStep = 0;
 
   // create the cells:
   for (let i = 0; i < cellsPerRow; i++) {
@@ -73,6 +74,7 @@ function bootGame(size, _lives) {
   for (let i = 0; i < cellsPerRow; i++) {
     for (let j = 0; j < cellsPerRow; j++) {
       game(i, j);
+      // cellStorage[i][j].element.textContent = cellStorage[i][j].state;
     }
   }
   updateGameStats();
@@ -88,7 +90,7 @@ function game(i, j) {
   // add click event listeners:
   cellStorage[i][j].element.onpointerup = function () {
     // play audio:
-    if (isAudioOn) {
+    if (isAudioOn && !cellStorage[i][j].isVisited) {
       bombAudio.pause();
       bombAudio.currentTime = 0;
       zeroAudio.pause();
@@ -122,14 +124,20 @@ function game(i, j) {
 function updateGameStats() {
   // handle game over:
   if (LIVES === 0 || cellsPerRow >= 15) {
-    restartDisplay.style.display = "flex";
+    const timeoutRef = setTimeout(() => {
+      restartDisplay.style.display = "flex";
+      clearTimeout(timeoutRef);
+    }, 500);
   }
 
   if (SCORE >= maxScore) {
     if (isAudioOn) {
       victoryAudio.play();
     }
-    nextDisplay.style.display = "flex";
+    const timeoutRef = setTimeout(() => {
+      nextDisplay.style.display = "flex";
+      clearTimeout(timeoutRef);
+    }, 500);
   }
 
   level.textContent = LEVEL >= 10 ? LEVEL : `0${LEVEL}`;
@@ -159,11 +167,12 @@ function countNeighborBombs(i, j) {
 }
 
 function updateNeighbors(prevI, prevJ) {
+  timeStep = 0;
+
   for (let iOff = -1; iOff <= 1; iOff++) {
     for (let jOff = -1; jOff <= 1; jOff++) {
       let i = prevI + iOff;
       let j = prevJ + jOff;
-      console.log(i, j);
 
       if (
         i > -1 &&
@@ -172,9 +181,13 @@ function updateNeighbors(prevI, prevJ) {
         j < cellsPerRow &&
         !cellStorage[i][j].isVisited
       ) {
-        console.log("worked!");
-        cellStorage[i][j].update();
-        if (cellStorage[i][j].state === "0") updateNeighbors(i, j);
+        timeStep += 100;
+        const timeoutRef = setTimeout(() => {
+          cellStorage[i][j].update();
+          if (cellStorage[i][j].state === "0") updateNeighbors(i, j);
+
+          clearTimeout(timeoutRef);
+        }, timeStep);
       }
     }
   }

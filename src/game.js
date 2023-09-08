@@ -40,6 +40,7 @@ let containerSize =
     : 20);
 const bomb = "💣";
 const live = "❤️";
+let timeStep = 0;
 let SCORE = 0;
 let LEVEL = 0;
 let LIVES = 5;
